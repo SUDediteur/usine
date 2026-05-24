@@ -13,7 +13,7 @@ pages:
     # Injection du moteur
     - cp -r hamlet580-project-engine/themes/* themes/
     - cp -r hamlet580-project-engine/layouts/* layouts/
-    - cp -r hamlet580-project-engine/layouts/* static/
+    - cp -r hamlet580-project-engine/static/* static/
 
     # Build
     - hugo
