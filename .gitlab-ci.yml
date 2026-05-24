@@ -8,10 +8,12 @@ pages:
     # Préparation des dossiers Hugo
     - mkdir -p themes
     - mkdir -p layouts
+    - mkdir -p static
 
     # Injection du moteur
     - cp -r hamlet580-project-engine/themes/* themes/
     - cp -r hamlet580-project-engine/layouts/* layouts/
+    - cp -r hamlet580-project-engine/layouts/* static/
 
     # Build
     - hugo
