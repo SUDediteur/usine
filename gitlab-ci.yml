@@ -17,12 +17,15 @@ pages:
     - cp -r hamlet580-project-engine/themes/* themes/
     - cp -r hamlet580-project-engine/layouts/* layouts/
     - cp -r hamlet580-project-engine/static/* static/
+    - cp hamlet580-project-engine/hugo.toml .
 
     # Injecter dépôt utilisateur dans configuration Decap CMS
     - export REPO="$CI_PROJECT_PATH"
     - export PAGES_URL="$CI_PAGES_URL"
     - envsubst < static/admin/config.yml > static/admin/config.tmp.yml
     - mv static/admin/config.tmp.yml static/admin/config.yml
+    - envsubst < hugo.toml > hugo.tmp.toml
+    - mv hugo.tmp.toml hugo.toml
 
     # Build
     - hugo
