@@ -5,7 +5,7 @@ backend:
   auth_type: pkce
   app_id: ef799dda35b19c5350294ced637400ca898c064e0bee7434df1c1e4251987769
 media_folder: static/fichiers
-public_folder: /fichier
+public_folder: /fichiers
 collections:
   - name: 'posts'
     label: 'Articles'
@@ -14,8 +14,8 @@ collections:
     slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
     editor:
       preview: true
-    media_folder: "static/fichiers/posts/{{slug}}"
-    public_folder: "/fichier/article/{{slug}}"
+    media_folder: "static/fichiers/articles/{{slug}}"
+    public_folder: "/fichiers/articles/{{slug}}"
     fields:
       - { label: 'Titre', name: 'title', widget: 'string' }
       - { label: 'Date de publication', name: 'date', widget: 'datetime' }
@@ -28,7 +28,7 @@ collections:
     editor:
       preview: true
     media_folder: "static/fichiers/pages/{{slug}}"
-    public_folder: "/fichier/page/{{slug}}"
+    public_folder: "/fichiers/pages/{{slug}}"
     fields:
       - { label: 'Titre', name: 'title', widget: 'string' }
       - { label: 'Date de publication', name: 'date', widget: 'datetime' }
