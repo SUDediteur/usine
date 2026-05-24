@@ -1,4 +1,4 @@
-image: docker.io/hugomods/hugo:std-base-0.140.2
+image: docker.io/hugomods/hugo:std-git-0.140.2
 
 pages:
   script:
