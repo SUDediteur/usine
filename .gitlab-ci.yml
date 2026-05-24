@@ -1,5 +1,4 @@
-image: ghcr.io/gohugoio/hugo:v0.140.2
-
+image: docker.io/hugomods/hugo:go-git-v0.140.2
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
