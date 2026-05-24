@@ -1,15 +1,15 @@
 backend:
   name: gitlab
-  repo: hamlet580-group/hamlet580-group.gitlab.io
+  repo: ${REPO}
   branch: main
   auth_type: pkce
   app_id: ef799dda35b19c5350294ced637400ca898c064e0bee7434df1c1e4251987769
 media_folder: static/img
 public_folder: /img
 collections:
-  - name: 'blog'
-    label: 'Blog'
-    folder: 'content/blog'
+  - name: 'posts'
+    label: 'Articles'
+    folder: 'content/posts'
     create: true
     slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
     editor:

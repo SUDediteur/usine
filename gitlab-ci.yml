@@ -15,6 +15,11 @@ pages:
     - cp -r hamlet580-project-engine/layouts/* layouts/
     - cp -r hamlet580-project-engine/static/* static/
 
+    # Injecter dépôt utilisateur dans configuration Decap CMS
+    - export REPO="$CI_PROJECT_PATH"
+    - envsubst < static/admin/config.yml > static/admin/config.tmp.yml
+    - mv static/admin/config.tmp.yml static/admin/config.yml
+
     # Build
     - hugo
 
