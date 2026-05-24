@@ -3,9 +3,8 @@ image: docker.io/hugomods/hugo:std-git-0.140.2
 pages:
   script:
     # Ajout des dépendances
-    - apt-get update
-    - apt-get install -y gettext
-    
+    - apk add gettext
+
     # Clone du moteur
     - git clone https://gitlab.com/hamlet580-group/hamlet580-project-engine.git
 
