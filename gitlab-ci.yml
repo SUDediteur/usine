@@ -20,6 +20,7 @@ pages:
 
     # Injecter dépôt utilisateur dans configuration Decap CMS
     - export REPO="$CI_PROJECT_PATH"
+    - export PAGES_URL="$CI_PAGES_URL"
     - envsubst < static/admin/config.yml > static/admin/config.tmp.yml
     - mv static/admin/config.tmp.yml static/admin/config.yml
 

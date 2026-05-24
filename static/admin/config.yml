@@ -4,8 +4,10 @@ backend:
   branch: main
   auth_type: pkce
   app_id: ef799dda35b19c5350294ced637400ca898c064e0bee7434df1c1e4251987769
+
 media_folder: static/fichiers
 public_folder: /fichiers
+
 collections:
   - name: 'posts'
     label: 'Articles'
@@ -33,4 +35,13 @@ collections:
       - { label: 'Titre', name: 'title', widget: 'string' }
       - { label: 'Date de publication', name: 'date', widget: 'datetime' }
       - { label: 'Contenu', name: 'body', widget: 'markdown' }
+
 locale: fr
+
+publish_mode: editorial_workflow
+
+site_url: ${PAGES_URL}
+
+logo:
+  src: ${PAGES_URL}/img/logo_solidaires_carre.svg
+  show_in_header: true
