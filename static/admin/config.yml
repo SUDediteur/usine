@@ -2,7 +2,7 @@ backend:
   name: gitlab
   repo: hamlet580-group/hamlet580-group.gitlab.io
   branch: main
-  auth_type: implicit
+  auth_type: pkce
   app_id: ef799dda35b19c5350294ced637400ca898c064e0bee7434df1c1e4251987769
 media_folder: static/img
 public_folder: /img
