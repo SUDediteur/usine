@@ -1,13 +1,24 @@
-image: docker.io/hugomods/hugo:go-git-0.140.2
-
-variables:
-  GIT_SUBMODULE_STRATEGY: recursive
+image: docker.io/hugomods/hugo:std-base-0.140.2
 
 pages:
   script:
-  - hugo
+    # Clone du moteur
+    - git clone https://gitlab.com/hamlet580-group/hamlet580-project-engine.git
+
+    # Préparation des dossiers Hugo
+    - mkdir -p themes
+    - mkdir -p layouts
+
+    # Injection du moteur
+    - cp -r hamlet580-project-engine/themes/* themes/
+    - cp -r hamlet580-project-engine/layouts/* layouts/
+
+    # Build
+    - hugo
+
   artifacts:
     paths:
-    - public
+      - public
+
   rules:
-  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
