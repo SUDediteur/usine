@@ -45,3 +45,5 @@ site_url: ${PAGES_URL}
 logo:
   src: ${PAGES_URL}/img/logo_solidaires_carre.svg
   show_in_header: true
+
+show_preview_links: true
