@@ -1,9 +1,7 @@
 backend:
-  name: gitlab
+  name: github
   repo: ${REPO}
   branch: main
-  auth_type: pkce
-  app_id: ef799dda35b19c5350294ced637400ca898c064e0bee7434df1c1e4251987769
 
 media_folder: static/fichiers
 public_folder: /fichiers
