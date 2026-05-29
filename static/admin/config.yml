@@ -3,7 +3,7 @@ backend:
   repo: ${REPO}
   branch: main
   base_url: https://github.sudediteur.workers.dev
-  auth_endpoint: https://github.sudediteur.workers.dev/auth
+  auth_endpoint: auth
 
 media_folder: static/fichiers
 public_folder: /fichiers
