@@ -2,7 +2,8 @@ backend:
   name: github
   repo: SUDediteur/vitrine
   branch: main
-  site_url: https://sudediteur.github.io/vitrine
+  
+site_url: https://sudediteur.github.io/vitrine
 
 media_folder: static/fichiers
 public_folder: /fichiers
