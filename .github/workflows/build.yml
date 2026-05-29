@@ -1,0 +1,69 @@
+name: Build site
+
+on:
+push:
+branches:
+- main
+
+permissions:
+contents: read
+pages: write
+id-token: write
+
+jobs:
+build:
+runs-on: ubuntu-latest
+
+```
+steps:
+  - uses: actions/checkout@v4
+
+  - uses: peaceiris/actions-hugo@v3
+    with:
+      hugo-version: '0.140.2'
+      extended: true
+
+  - name: Install gettext
+    run: sudo apt-get update && sudo apt-get install -y gettext
+
+  - name: Clone engine
+    run: git clone https://github.com/SUDediteur/usine.git
+
+  - name: Inject engine
+    run: |
+      mkdir -p themes layouts static
+
+      cp -r usine/themes/* themes/
+      cp -r usine/layouts/* layouts/
+      cp -r usine/static/* static/
+      cp usine/hugo.toml .
+
+  - name: Inject dynamic variables
+    env:
+      REPO: ${{ github.repository }}
+      PAGES_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+    run: |
+      envsubst < static/admin/config.yml > static/admin/config.tmp.yml
+      mv static/admin/config.tmp.yml static/admin/config.yml
+
+      envsubst < hugo.toml > hugo.tmp.toml
+      mv hugo.tmp.toml hugo.toml
+
+  - name: Build
+    run: hugo
+
+  - name: Upload Pages artifact
+    uses: actions/upload-pages-artifact@v3
+    with:
+      path: ./public
+```
+
+deploy:
+needs: build
+
+```
+runs-on: ubuntu-latest
+
+steps:
+  - uses: actions/deploy-pages@v4
+```
