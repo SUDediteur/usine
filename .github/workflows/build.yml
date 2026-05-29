@@ -1,4 +1,4 @@
-name: Build site
+name: Construction du site web
 
 on:
   workflow_call:
@@ -20,22 +20,22 @@ jobs:
           hugo-version: '0.140.2'
           extended: true
 
-      - name: Install gettext
+      - name: Installation du paquet gettext
         run: sudo apt-get update && sudo apt-get install -y gettext
 
-      - name: Clone engine
-        run: git clone https://github.com/SUDediteur/engine.git engine
+      - name: Copie des fichiers du projet usine
+        run: git clone https://github.com/SUDediteur/usine.git
 
-      - name: Inject engine
+      - name: Injection des fichiers du projet usine
         run: |
           mkdir -p themes layouts static
 
-          cp -r engine/themes/* themes/
-          cp -r engine/layouts/* layouts/
-          cp -r engine/static/* static/
-          cp engine/hugo.toml .
+          cp -r usine/themes/* themes/
+          cp -r usine/layouts/* layouts/
+          cp -r usine/static/* static/
+          cp usine/hugo.toml .
 
-      - name: Inject dynamic variables
+      - name: Injection des variables dynamiques
         env:
           REPO: ${{ github.repository }}
           PAGES_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
@@ -46,10 +46,10 @@ jobs:
           envsubst < hugo.toml > hugo.tmp.toml
           mv hugo.tmp.toml hugo.toml
 
-      - name: Build site
+      - name: Génération du site web par Hugo
         run: hugo
 
-      - name: Upload Pages artifact
+      - name: Mise en ligne du site web généré
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./public
