@@ -24,6 +24,9 @@ jobs:
       - name: Install gettext
         run: sudo apt-get update && sudo apt-get install -y gettext
 
+      # =========================
+      # 📦 Clone engine ("usine")
+      # =========================
       - name: Clone usine theme
         run: git clone https://github.com/SUDediteur/usine.git
 
@@ -36,6 +39,9 @@ jobs:
           cp -r usine/static/* static/
           cp usine/hugo.toml .
 
+      # =========================
+      # 🔧 Inject variables
+      # =========================
       - name: Inject variables
         env:
           REPO: ${{ github.repository }}
@@ -47,23 +53,14 @@ jobs:
           envsubst < hugo.toml > hugo.tmp.toml
           mv hugo.tmp.toml hugo.toml
 
+      # =========================
+      # 🧱 Build Hugo
+      # =========================
       - name: Build Hugo
         run: hugo
 
-
-      - name: Upload preview to R2
-        env:
-          R2_ENDPOINT: ${{ secrets.CF_R2_ENDPOINT }}
-        run: |
-          USER=${{ github.repository_owner }}
-          SHA=${GITHUB_SHA}
-
-          aws s3 sync ./public \
-            s3://preview-sites/${USER}/${SHA} \
-            --endpoint-url $R2_ENDPOINT
-
       # =========================
-      # 🔥 PREVIEW DETECTION
+      # 🔥 Detect preview branch
       # =========================
       - name: Detect preview branch
         id: preview
@@ -75,7 +72,7 @@ jobs:
           fi
 
       # =========================
-      # ☁️ PREVIEW URL (TEMPORAIRE)
+      # ☁️ Generate preview URL (temporaire)
       # =========================
       - name: Generate preview URL
         if: steps.preview.outputs.is_preview == 'true'
@@ -83,23 +80,22 @@ jobs:
           echo "PREVIEW_URL=https://apercu.sudediteur.workers.dev/${{ github.repository_owner }}/${GITHUB_SHA}" >> $GITHUB_ENV
 
       # =========================
-      # 🔗 GITHUB STATUS (clé Decap CMS)
+      # 🔗 Publish GitHub status (Decap CMS)
       # =========================
       - name: Publish preview status
         if: steps.preview.outputs.is_preview == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          curl -X POST \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github+json" \
-            https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }} \
-            -d "{
-              \"state\": \"success\",
-              \"context\": \"deploy-preview\",
-              \"target_url\": \"${PREVIEW_URL}\"
-            }"
+          gh api \
+            -X POST \
+            repos/${{ github.repository }}/statuses/${GITHUB_SHA} \
+            -f state=success \
+            -f context=deploy-preview \
+            -f target_url="$PREVIEW_URL"
 
       # =========================
-      # 📦 PROD DEPLOY (optionnel ici)
+      # 📦 Upload artifact (prod only)
       # =========================
       - name: Upload Pages artifact
         if: steps.preview.outputs.is_preview != 'true'
@@ -107,6 +103,9 @@ jobs:
         with:
           path: ./public
 
+  # =========================
+  # 🌍 Deploy GitHub Pages (prod only)
+  # =========================
   deploy:
     if: github.ref == 'refs/heads/main'
     needs: build
