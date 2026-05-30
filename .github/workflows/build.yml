@@ -63,7 +63,7 @@ jobs:
         run: |
           cd public
           find . -type f | while read file; do
-            curl -X POST https://upload.sudediteur.workers.dev/upload-file \
+            curl -X POST https://upload.sudediteur.workers.dev/ \
               -F "user=${{ github.repository_owner }}" \
               -F "sha=${GITHUB_SHA}" \
               -F "path=$file" \
