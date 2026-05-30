@@ -59,6 +59,17 @@ jobs:
       - name: Build Hugo
         run: hugo
 
+      - name: Upload files
+        run: |
+          cd public
+          find . -type f | while read file; do
+            curl -X POST https://upload.sudediteur.workers.dev/upload-file \
+              -F "user=${{ github.repository_owner }}" \
+              -F "sha=${GITHUB_SHA}" \
+              -F "path=$file" \
+              -F "file=@$file"
+          done
+
       # =========================
       # 🔥 Detect preview branch
       # =========================
